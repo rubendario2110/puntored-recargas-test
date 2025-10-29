@@ -6,8 +6,10 @@ class EnvVars {
   @IsString() @IsOptional() JWT_EXPIRES_IN?: string;
 
   @IsString() @IsOptional() DB_DATABASE?: string;
+  @IsString() @IsOptional() DATABASE_URL?: string;
   @IsBooleanString() @IsOptional() DB_SYNCHRONIZE?: string;
   @IsBooleanString() @IsOptional() DB_LOGGING?: string;
+  @IsBooleanString() @IsOptional() DB_SSL?: string;
   @IsNumberString() @IsOptional() PORT?: string;
 }
 

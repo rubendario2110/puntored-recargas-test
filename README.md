@@ -66,6 +66,27 @@ Ejemplo:
 {"timestamp":"2025-10-29T13:30:00.000Z","level":"INFO","message":"http_request_completed","context":"HTTP","details":{"requestId":"f3c4e9d8-2b6a-4af7-a1d7-9132d2a1f9e0","method":"POST","url":"/recharges/buy","statusCode":201,"durationMs":32}}
 ```
 
+## Despliegue en Railway (Postgres)
+1. **Crear servicios**: en Railway agrega el repositorio como servicio Node.js y añade un plugin de Postgres gratuito.
+2. **Variables de entorno**  
+   - `JWT_SECRET`: clave para firmar los JWT.  
+   - `DATABASE_URL`: cadena provista por Railway (`postgresql://usuario:password@host:puerto/db`).  
+   - `DB_SSL=true`: Railway exige conexiones SSL; el módulo TypeORM usa `rejectUnauthorized: false`.  
+   - `PORT`: Railway la inyecta automáticamente, pero puedes fijar `PORT=3000` como respaldo.  
+   - Opcionalmente ajusta `DB_SYNCHRONIZE=false` si administras migraciones manuales; para demos puede quedar en `true`.
+3. **Build & start**: configura `npm install` como comando de build y `npm run start` como comando de arranque.
+4. **Dependencias**: ejecuta `npm install` tras actualizar el repositorio para tomar `pg`, el driver de Postgres.
+5. **Migraciones / SQL**: crea la tabla `transactions` ejecutando `docs/sql/transactions.postgres.sql`:
+   ```bash
+   railway connect
+   \i docs/sql/transactions.postgres.sql
+   ```
+   Alternativa no interactiva:
+   ```bash
+   railway run psql "$DATABASE_URL" -f docs/sql/transactions.postgres.sql
+   ```
+6. **Verificación**: usa la colección Postman contra la URL pública que entrega Railway para validar el despliegue.
+
 ## Decisiones tecnicas
 - `NestJS + DDD`: separacion clara entre dominio, aplicacion e infraestructura para facilitar pruebas y cambios.
 - `TypeORM + SQLite`: motor liviano por defecto; la interfaz `ITransactionRepository` permite migrar sin tocar el dominio.
@@ -136,6 +157,8 @@ test/
 docs/
   postman/
     puntored-recargas.postman_collection.json  # Coleccion importable con los requests basicos
+  sql/
+    transactions.postgres.sql            # Script de creacion de tabla/indices para Postgres Railway
 ```
 ## Coleccion Postman
 - Ruta: `docs/postman/puntored-recargas.postman_collection.json`.

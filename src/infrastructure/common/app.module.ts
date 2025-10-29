@@ -14,14 +14,30 @@ import { LoggerModule } from './logger/logger.module';
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (cfg: ConfigService) => {
+        const databaseUrl = cfg.get<string>('DATABASE_URL');
         const synchronize = cfg.get<string>('DB_SYNCHRONIZE');
         const logging = cfg.get<string>('DB_LOGGING');
+        const shouldSync = synchronize ? synchronize === 'true' : true;
+        const shouldLog = logging === 'true';
+
+        if (databaseUrl) {
+          const ssl = cfg.get<string>('DB_SSL');
+          return {
+            type: 'postgres',
+            url: databaseUrl,
+            entities: [TransactionOrmEntity],
+            synchronize: shouldSync,
+            logging: shouldLog,
+            ssl: ssl === 'true' ? { rejectUnauthorized: false } : false,
+          } as any;
+        }
+
         return {
           type: 'sqlite',
           database: cfg.get<string>('DB_DATABASE') || './var/dev.sqlite',
           entities: [TransactionOrmEntity],
-          synchronize: synchronize ? synchronize === 'true' : true,
-          logging: logging === 'true',
+          synchronize: shouldSync,
+          logging: shouldLog,
         } as any;
       },
     }),
