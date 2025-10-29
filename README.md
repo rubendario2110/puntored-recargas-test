@@ -12,7 +12,7 @@ PuntoRed – Backend Recargas (NestJS + TS + DDD)
 
 - **Contenedores (C4 Nivel 2)**  
   - `Backend NestJS`: servicio REST JWT que implementa autenticación y recargas.  
-  - `Base de Datos`: persistencia relacional (SQLite local, PostgreSQL en Docker).  
+  - `Base de Datos`: persistencia relacional (SQLite local).  
   - `Event Bus In-Memory`: entrega eventos de dominio (`RechargeSucceededEvent`) a listeners internos.
 
 - **Componentes (C4 Nivel 3)**  
@@ -25,3 +25,5 @@ PuntoRed – Backend Recargas (NestJS + TS + DDD)
   - Controllers → Casos de uso → Repositorios (puertos) mantienen el dominio desacoplado de la infraestructura.  
   - Casos de uso → EventBus permite evolucionar hacia integraciones asincrónicas.  
   - Logger estructurado se comparte para observabilidad consistente en todas las capas.
+
+  ![alt text](image.png)
