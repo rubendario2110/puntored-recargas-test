@@ -76,7 +76,16 @@ Ejemplo:
    - Opcionalmente ajusta `DB_SYNCHRONIZE=false` si administras migraciones manuales; para demos puede quedar en `true`.
 3. **Build & start**: configura `npm install` como comando de build y `npm run start` como comando de arranque.
 4. **Dependencias**: ejecuta `npm install` tras actualizar el repositorio para tomar `pg`, el driver de Postgres.
-5. **Verificación**: usa la colección Postman contra la URL pública que entrega Railway para validar el despliegue.
+5. **Migraciones / SQL**: crea la tabla `transactions` ejecutando `docs/sql/transactions.postgres.sql`:
+   ```bash
+   railway connect
+   \i docs/sql/transactions.postgres.sql
+   ```
+   Alternativa no interactiva:
+   ```bash
+   railway run psql "$DATABASE_URL" -f docs/sql/transactions.postgres.sql
+   ```
+6. **Verificación**: usa la colección Postman contra la URL pública que entrega Railway para validar el despliegue.
 
 ## Decisiones tecnicas
 - `NestJS + DDD`: separacion clara entre dominio, aplicacion e infraestructura para facilitar pruebas y cambios.
@@ -148,6 +157,8 @@ test/
 docs/
   postman/
     puntored-recargas.postman_collection.json  # Coleccion importable con los requests basicos
+  sql/
+    transactions.postgres.sql            # Script de creacion de tabla/indices para Postgres Railway
 ```
 ## Coleccion Postman
 - Ruta: `docs/postman/puntored-recargas.postman_collection.json`.
