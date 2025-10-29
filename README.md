@@ -160,7 +160,17 @@ docs/
   sql/
     transactions.postgres.sql            # Script de creacion de tabla/indices para Postgres Railway
 ```
+
+## Modelo entidad-relacion
+- **transactions**  
+  - `id (uuid, PK)`: identificador de la transaccion; en Postgres se genera con `uuid_generate_v4()`, en SQLite mediante `PRIMARY KEY` de TypeORM.  
+  - `phoneNumber (varchar(10))`: linea recargada; indexado para consultas por numero.  
+  - `amount (integer)`: valor de la recarga almacenado en unidades monetarias enteras.  
+  - `userId (varchar(64))`: identificador del usuario que solicita la recarga; indexado para el historial.  
+  - `createdAt (timestamp)`: fecha de registro que forma la ordenacion del historial.
+- Relaciones: la aplicacion usa un servicio de usuarios en memoria (`hardcoded-user.service.ts`), por lo que no existen claves foraneas en la base. El repositorio `transaction.typeorm.repository.ts` consulta por `userId` para alimentar el caso de uso `GetHistory`.
+
 ## Coleccion Postman
 - Ruta: `docs/postman/puntored-recargas.postman_collection.json`.
-- Variables de entorno: `baseUrl` (por defecto `http://localhost:3000`) y `accessToken` (rellenar con el JWT de Login).
+- Variables de entorno: `baseUrl` (preconfigurada a la URL de Railway `https://puntored-recargas-test-production.up.railway.app`, cámbiala si pruebas en local) y `accessToken` (rellenar con el JWT de Login).
 - Requests incluidos: **Login**, **Comprar recarga** y **Historial de recargas**; ejecutalos en orden para probar el flujo completo.
