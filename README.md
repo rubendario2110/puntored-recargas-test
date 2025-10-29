@@ -10,6 +10,8 @@ PuntoRed – Backend Recargas (NestJS + TS + DDD)
   - `Operadores / Servicios Externos` (futuros integradores) recibirán eventos del dominio; hoy se simulan en memoria.  
   - `SQLite / PostgreSQL` almacenan transacciones de recarga.
 
+   ![alt text](context.drawio.png)
+
 - **Contenedores (C4 Nivel 2)**  
   - `Backend NestJS`: servicio REST JWT que implementa autenticación y recargas.  
   - `Base de Datos`: persistencia relacional (SQLite local).  
@@ -25,5 +27,3 @@ PuntoRed – Backend Recargas (NestJS + TS + DDD)
   - Controllers → Casos de uso → Repositorios (puertos) mantienen el dominio desacoplado de la infraestructura.  
   - Casos de uso → EventBus permite evolucionar hacia integraciones asincrónicas.  
   - Logger estructurado se comparte para observabilidad consistente en todas las capas.
-
-  ![alt text](image.png)
