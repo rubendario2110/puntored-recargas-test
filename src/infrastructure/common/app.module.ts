@@ -14,26 +14,14 @@ import { LoggerModule } from './logger/logger.module';
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (cfg: ConfigService) => {
-        const type = (cfg.get<'sqlite' | 'postgres'>('DB_TYPE', 'sqlite'));
-        if (type === 'sqlite') {
-          return {
-            type: 'sqlite',
-            database: cfg.get<string>('DB_DATABASE') || './var/dev.sqlite',
-            entities: [TransactionOrmEntity],
-            synchronize: (cfg.get<string>('DB_SYNCHRONIZE') === 'true') || true,
-            logging: (cfg.get<string>('DB_LOGGING') === 'true') || false,
-          } as any;
-        }
+        const synchronize = cfg.get<string>('DB_SYNCHRONIZE');
+        const logging = cfg.get<string>('DB_LOGGING');
         return {
-          type: 'postgres',
-          host: cfg.get<string>('DB_HOST'),
-          port: Number(cfg.get<string>('DB_PORT')) || 5432,
-          username: cfg.get<string>('DB_USERNAME'),
-          password: cfg.get<string>('DB_PASSWORD'),
-          database: cfg.get<string>('DB_DATABASE'),
+          type: 'sqlite',
+          database: cfg.get<string>('DB_DATABASE') || './var/dev.sqlite',
           entities: [TransactionOrmEntity],
-          synchronize: (cfg.get<string>('DB_SYNCHRONIZE') === 'true'),
-          logging: (cfg.get<string>('DB_LOGGING') === 'true'),
+          synchronize: synchronize ? synchronize === 'true' : true,
+          logging: logging === 'true',
         } as any;
       },
     }),
