@@ -17,13 +17,18 @@ PuntoRed – Backend Recargas (NestJS + TS + DDD)
   - `Base de Datos`: persistencia relacional (SQLite local).  
   - `Event Bus In-Memory`: entrega eventos de dominio (`RechargeSucceededEvent`) a listeners internos.
 
+  ![alt text](container.png)
+
 - **Componentes (C4 Nivel 3)**  
   - `Domain`: entidades (`Recharge`, `Transaction`), VO y eventos con reglas de negocio puras.  
   - `Application`: casos de uso (`BuyRechargeUseCase`, `GetHistoryUseCase`) que orquestan repositorios y event bus.  
   - `Infrastructure`: adaptadores entrantes (controllers, guards) y salientes (TypeORM repo, auth service, logger).  
   - `Common`: configuración (`AppModule`, `env.validation`) y utilidades transversales (logger estructurado, interceptores).
+  ![alt text](components.png)
 
 - **Relaciones clave**  
   - Controllers → Casos de uso → Repositorios (puertos) mantienen el dominio desacoplado de la infraestructura.  
   - Casos de uso → EventBus permite evolucionar hacia integraciones asincrónicas.  
   - Logger estructurado se comparte para observabilidad consistente en todas las capas.
+- **Diagrama de Secuencia**  
+  ![alt text](sequence.png)
