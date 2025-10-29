@@ -7,7 +7,7 @@
     "start": "nest start",
     "start:dev": "nest start --watch",
     "build": "nest build",
-    "test": "jest --runInBand",
+    "test": "jest --runInBand --coverage",
     "test:e2e": "jest --config ./jest-e2e.json --runInBand"
   },
   "dependencies": {
