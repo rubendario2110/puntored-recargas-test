@@ -3,6 +3,9 @@
 /node_modules
 /build
 /tmp
+/var
+var/
+/coverage
 
 # Logs
 logs
@@ -14,7 +17,6 @@ yarn-error.log*
 lerna-debug.log*
 
 # dotenv environment variable files
-.env
 .env.development
 .env.test
 .env.production
@@ -22,3 +24,4 @@ lerna-debug.log*
 # temp directory
 .temp
 .tmp
+.var
