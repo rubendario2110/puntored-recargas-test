@@ -4,6 +4,7 @@
 /build
 /tmp
 /var
+var/
 /coverage
 
 # Logs
