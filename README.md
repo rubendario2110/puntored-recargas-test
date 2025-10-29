@@ -162,5 +162,5 @@ docs/
 ```
 ## Coleccion Postman
 - Ruta: `docs/postman/puntored-recargas.postman_collection.json`.
-- Variables de entorno: `baseUrl` (por defecto `http://localhost:3000`) y `accessToken` (rellenar con el JWT de Login).
+- Variables de entorno: `baseUrl` (preconfigurada a la URL de Railway `https://puntored-recargas-test-production.up.railway.app`, cámbiala si pruebas en local) y `accessToken` (rellenar con el JWT de Login).
 - Requests incluidos: **Login**, **Comprar recarga** y **Historial de recargas**; ejecutalos en orden para probar el flujo completo.
