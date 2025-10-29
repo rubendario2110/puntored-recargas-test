@@ -1,5 +1,5 @@
 import { plainToInstance } from 'class-transformer';
-import { IsBooleanString, IsOptional, IsString, validateSync } from 'class-validator';
+import { IsBooleanString, IsNumberString, IsOptional, IsString, validateSync } from 'class-validator';
 
 class EnvVars {
   @IsString() JWT_SECRET!: string;
@@ -8,6 +8,7 @@ class EnvVars {
   @IsString() @IsOptional() DB_DATABASE?: string;
   @IsBooleanString() @IsOptional() DB_SYNCHRONIZE?: string;
   @IsBooleanString() @IsOptional() DB_LOGGING?: string;
+  @IsNumberString() @IsOptional() PORT?: string;
 }
 
 export function validate(config: Record<string, unknown>) {
